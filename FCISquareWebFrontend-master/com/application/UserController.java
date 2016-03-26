@@ -250,6 +250,36 @@ public class UserController
 			return session.toString();
 
 		}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		@POST
+		@Path("/unfollowUSer")
+		@Produces(MediaType.TEXT_PLAIN)
+		public String updateLocation(@FormParam("id_1")Integer followerID,  @FormParam("id_2") Integer followedID){
+			HttpSession session = request.getSession();
+			Long id = (Long) session.getAttribute("id");
+			//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/unfollowUser";
+			String serviceUrl = "http://localhost:8080/FCISquare/rest/unfollowUser";
+
+			String urlParameters = "id=" + id + "&id_1=" + followerID+ "&id_2=" + followedID ;  
+			// System.out.println(urlParameters);
+			String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+					"application/x-www-form-urlencoded;charset=UTF-8");
+			JSONParser parser = new JSONParser();
+			JSONObject obj;
+			try {
+				obj = (JSONObject)parser.parse(retJson);
+				Long status = (Long) obj.get("status");
+				if(status == 1)
+					return "Your request is done ";
+				else
+					return "A problem occured";
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "A problem occured";
+			
+		}
 
 
 }
