@@ -220,5 +220,36 @@ public class UserController
 		return IDs;
 		
 	}
+	
+	// ------------------------------------------- GetLastPosition --------------------------------------------------//
+
+		@POST
+		@Path("/GetLastPosition")
+		@Produces(MediaType.TEXT_PLAIN)
+		public String GetLastPosition(@FormParam("id") String id) {
+			HttpSession session = request.getSession();
+			//Long id = (Long) session.getAttribute("id");
+			// String serviceUrl =
+			// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
+			String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
+
+			String urlParameters = "id=" + id;
+			System.out.println(urlParameters);
+			String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+					"application/x-www-form-urlencoded;charset=UTF-8");
+			JSONParser parser = new JSONParser();
+			JSONObject obj;
+			try {
+				obj = (JSONObject) parser.parse(retJson);
+				session.getAttribute("lat");
+				session.getAttribute("long");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return session.toString();
+
+		}
+
 
 }
