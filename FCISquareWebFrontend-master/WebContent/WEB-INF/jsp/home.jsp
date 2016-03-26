@@ -21,6 +21,8 @@
 		{requires: name, pass}"</p>
 	<p>and "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition ---
 		{requires: id, lat, long}"</p>
+	<p>and "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/followUser ---
+		{requires: id1, id2}"</p>
 	<p> All parameters are post parameters </p>
 	
 	<p>you should implement Follow,	UnFollow, getFollowers and getLastPositionOfUser services </p>

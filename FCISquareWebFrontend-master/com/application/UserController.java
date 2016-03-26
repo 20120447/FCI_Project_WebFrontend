@@ -90,8 +90,8 @@ public class UserController
 	{
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/followUser";
+		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/followUser";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/followUser";
 
 		String urlParameters = "id=" + id + "&tofollow=" + tofollow ;
 		// System.out.println(urlParameters);
