@@ -165,8 +165,7 @@ public class UserController {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String GetLastPosition(@FormParam("id") String id) {
 		HttpSession session = request.getSession();
-		Long lat = (Long) session.getAttribute("lat");
-		Long lon = (Long) session.getAttribute("long");
+		Long id = (Long) session.getAttribute("id");
 		// String serviceUrl =
 		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
