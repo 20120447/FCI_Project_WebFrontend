@@ -21,7 +21,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 @Path("/")
-public class UserController {
+public class UserController 
+{
 
 	@Context
 	HttpServletRequest request;
@@ -29,28 +30,33 @@ public class UserController {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public Response loginPage() {
+	public Response loginPage() 
+	{
 		return Response.ok(new Viewable("/Login.jsp")).build();
 	}
 
 	@GET
 	@Path("/signUp")
 	@Produces(MediaType.TEXT_HTML)
-	public Response signUpPage() {
+	public Response signUpPage() 
+	{
 		return Response.ok(new Viewable("/Signup.jsp")).build();
 	}
 	
 	@GET
 	@Path("/showLocation")
 	@Produces(MediaType.TEXT_HTML)
-	public Response showLocationPage(){
+	public Response showLocationPage()
+	{
 		return Response.ok(new Viewable("/ShowLocation.jsp")).build();
 	}
-
+	
+	
 	@POST
 	@Path("/updateMyLocation")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateLocation(@FormParam("lat") String lat, @FormParam("long") String lon){
+	public String updateLocation(@FormParam("lat") String lat, @FormParam("long") String lon)
+	{
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
 		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
@@ -77,11 +83,46 @@ public class UserController {
 		
 	}
 	
+	///////follow User////
+
+	@POST
+	@Path("/updateNewFollower")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateNewFollower(@FormParam("tofollow") String tofollow)
+	{
+		HttpSession session = request.getSession();
+		Long id = (Long) session.getAttribute("id");
+		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
+		String serviceUrl = "http://localhost:8080/FCISquare/rest/followUser";
+
+		String urlParameters = "id=" + id + "&tofollow=" + tofollow ;
+		// System.out.println(urlParameters);
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+		JSONParser parser = new JSONParser();
+		JSONObject obj;
+		try {
+			obj = (JSONObject)parser.parse(retJson);
+			Long status = (Long) obj.get("status");
+			if(status == 1)
+				return "Your follower is updated ";
+			else
+				return "A problem occured";
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "A problem occured";
+		
+	}
+	//////////////////////
+	
 	@POST
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("email") String email,
-			@FormParam("pass") String pass) {
+			@FormParam("pass") String pass) 
+	{
 		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/login";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
@@ -119,7 +160,8 @@ public class UserController {
 	@Path("/doSignUp")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("name") String name,
-			@FormParam("email") String email, @FormParam("pass") String pass) {
+			@FormParam("email") String email, @FormParam("pass") String pass) 
+	{
 		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/signup";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/signup";
 
