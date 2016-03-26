@@ -1,5 +1,4 @@
 package com.application;
-import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,54 +21,53 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 @Path("/")
-public class UserController 
-{
+public class UserController {
+
 	@Context
 	HttpServletRequest request;
 
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public Response loginPage() 
-	{
+	public Response loginPage() {
 		return Response.ok(new Viewable("/Login.jsp")).build();
 	}
 
 	@GET
 	@Path("/signUp")
 	@Produces(MediaType.TEXT_HTML)
-
-	public Response signUpPage() 
-	{
+	public Response signUpPage() {
 		return Response.ok(new Viewable("/Signup.jsp")).build();
 	}
-	
+
 	@GET
 	@Path("/showLocation")
 	@Produces(MediaType.TEXT_HTML)
-	public Response showLocationPage(){
+	public Response showLocationPage() {
 		return Response.ok(new Viewable("/ShowLocation.jsp")).build();
 	}
+
 	@POST
 	@Path("/updateMyLocation")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateLocation(@FormParam("lat") String lat, @FormParam("long") String lon)
-	{
+	public String updateLocation(@FormParam("lat") String lat,
+			@FormParam("long") String lon) {
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
+		// String serviceUrl =
+		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
-		String urlParameters = "id=" + id + "&lat=" + lat + "&long="+ lon;
+		String urlParameters = "id=" + id + "&lat=" + lat + "&long=" + lon;
 		// System.out.println(urlParameters);
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		JSONParser parser = new JSONParser();
 		JSONObject obj;
 		try {
-			obj = (JSONObject)parser.parse(retJson);
+			obj = (JSONObject) parser.parse(retJson);
 			Long status = (Long) obj.get("status");
-			if(status == 1)
+			if (status == 1)
 				return "Your location is updated";
 			else
 				return "A problem occured";
@@ -78,51 +76,16 @@ public class UserController
 			e.printStackTrace();
 		}
 		return "A problem occured";
-		
-	}
-	
-	///////follow User////
 
-	@POST
-	@Path("/updateNewFollower")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String updateNewFollower(@FormParam("tofollow") String tofollow)
-	{
-		HttpSession session = request.getSession();
-		Long id = (Long) session.getAttribute("id");
-		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/followUser";
-		//String serviceUrl = "http://localhost:8080/FCISquare/rest/followUser";
-
-		String urlParameters = "id=" + id + "&tofollow=" + tofollow ;
-		// System.out.println(urlParameters);
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
-				"application/x-www-form-urlencoded;charset=UTF-8");
-		JSONParser parser = new JSONParser();
-		JSONObject obj;
-		try {
-			obj = (JSONObject)parser.parse(retJson);
-			Long status = (Long) obj.get("status");
-			if(status == 1)
-				return "Your follower is updated ";
-			else
-				return "A problem occured";
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "A problem occured";
-		
 	}
-	//////////////////////
-	
 
 	@POST
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("email") String email,
-			@FormParam("pass") String pass) 
-	{
-		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/login";
+			@FormParam("pass") String pass) {
+		// String serviceUrl =
+		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/login";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
 		String urlParameters = "email=" + email + "&pass=" + pass;
@@ -159,9 +122,9 @@ public class UserController
 	@Path("/doSignUp")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("name") String name,
-			@FormParam("email") String email, @FormParam("pass") String pass) 
-	{
-		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/signup";
+			@FormParam("email") String email, @FormParam("pass") String pass) {
+		// String serviceUrl =
+		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/signup";
 		String serviceUrl = "http://localhost:8080/FCISquare/rest/signup";
 
 		String urlParameters = "name=" + name + "&email=" + email + "&pass="
@@ -194,62 +157,35 @@ public class UserController
 		return null;
 
 	}
+
+	// ------------------------------------------- GetLastPosition --------------------------------------------------//
+
 	@POST
-	@Path("/getFollower")
+	@Path("/GetLastPosition")
 	@Produces(MediaType.TEXT_PLAIN)
-	public ArrayList getFollower(@FormParam("ID") int id){
+	public String GetLastPosition(@FormParam("id") String id) {
 		HttpSession session = request.getSession();
-		//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/getFollower";
+		Long id = (Long) session.getAttribute("id");
+		// String serviceUrl =
+		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
+		String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
 
 		String urlParameters = "id=" + id;
-		// System.out.println(urlParameters);
+		System.out.println(urlParameters);
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		JSONParser parser = new JSONParser();
-		ArrayList <Integer> IDs = new ArrayList<Integer>();
 		JSONObject obj;
 		try {
-			obj = (JSONObject)parser.parse(retJson);
-			int i = 0;
-			IDs.add((int) session.getAttribute("followerID"), i);
+			obj = (JSONObject) parser.parse(retJson);
+			session.getAttribute("lat");
+			session.getAttribute("long");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return IDs;
-		
+		return session.toString();
+
 	}
-	
-	// ------------------------------------------- GetLastPosition --------------------------------------------------//
-
-		@POST
-		@Path("/GetLastPosition")
-		@Produces(MediaType.TEXT_PLAIN)
-		public String GetLastPosition(@FormParam("id") String id) {
-			HttpSession session = request.getSession();
-			//Long id = (Long) session.getAttribute("id");
-			// String serviceUrl =
-			// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-			String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
-
-			String urlParameters = "id=" + id;
-			System.out.println(urlParameters);
-			String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
-					"application/x-www-form-urlencoded;charset=UTF-8");
-			JSONParser parser = new JSONParser();
-			JSONObject obj;
-			try {
-				obj = (JSONObject) parser.parse(retJson);
-				session.getAttribute("lat");
-				session.getAttribute("long");
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return session.toString();
-
-		}
-
 
 }
