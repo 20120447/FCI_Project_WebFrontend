@@ -238,16 +238,18 @@ public class UserController
 			String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 					"application/x-www-form-urlencoded;charset=UTF-8");
 			JSONParser parser = new JSONParser();
-			JSONObject obj;
+			JSONObject obj = null;
 			try {
 				obj = (JSONObject) parser.parse(retJson);
-				session.getAttribute("lat");
-				session.getAttribute("long");
+				Long lat = (Long) obj.get("lat");
+				Long lon = (Long) obj.get("long");
+				//session.getAttribute("lat");
+				//session.getAttribute("long");
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return session.toString();
+			return obj.toString();
 
 		}
 
