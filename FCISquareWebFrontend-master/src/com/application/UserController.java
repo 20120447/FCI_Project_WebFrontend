@@ -2,6 +2,7 @@ package com.application;
 
 import java.util.ArrayList;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,14 +23,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 /**
  * 
  * UserController class contains rest services , this class contain all action
+
+
  * functions for web Application. version 1.0
  * 
  * @author Mohamed samir ,Hadeer Tarek , Nesma mahmoud , Nada Nashaat , Fatma
  *         Abdelaty since 17/3/2016
  */
+
+
 
 @Path("/")
 public class UserController {
@@ -44,12 +50,17 @@ public class UserController {
 	 * @return login page
 	 */
 
+
+	
+
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public Response loginPage() {
+	public Response loginPage() 
+	{
 		return Response.ok(new Viewable("/Login.jsp")).build();
 	}
+
 
 	/**
 	 * Action function to render signup page this function will be excuted by
@@ -58,6 +69,8 @@ public class UserController {
 	 * @return signup page
 	 */
 
+
+
 	@GET
 	@Path("/signUp")
 	@Produces(MediaType.TEXT_HTML)
@@ -65,6 +78,7 @@ public class UserController {
 	public Response signUpPage() {
 		return Response.ok(new Viewable("/Signup.jsp")).build();
 	}
+
 
 	/**
 	 * Action function to render show location page page this function will be
@@ -79,6 +93,7 @@ public class UserController {
 	public Response showLocationPage() {
 		return Response.ok(new Viewable("/ShowLocation.jsp")).build();
 	}
+
 
 	/**
 	 * updateLocation Action function , this function act as a controller part
@@ -120,6 +135,7 @@ public class UserController {
 		return "A problem occured";
 
 	}
+
 
 	/////// follow User////
 	/**
@@ -163,17 +179,15 @@ public class UserController {
 	}
 
 	//////////////////////
-	/**
-	 * Action function used to call login service to check user data and get
-	 * user from data store
-	 * 
-	 * @param email
-	 *            provided user email
-	 * @param pass
-	 *            provided user password
-	 * @return login page
-	 */
 
+	/**
+	 *  Action function used to call login service to check user data and get user from data store
+	 * @param email 
+	 *            provided user email 
+	 * @param pass  
+	 *          provided user password
+	 * @return  login page 
+	 */
 	@POST
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
@@ -264,6 +278,7 @@ public class UserController {
 
 	}
 
+
 	/**
 	 * Action function used to call getFollower service and get data of followed
 	 * users from data store
@@ -301,8 +316,9 @@ public class UserController {
 
 	}
 
+	
+
 	// ------------------------------------------- GetLastPosition
-	// --------------------------------------------------//
 
 	/**
 	 * Action function used to call GetLastPosition service to check user data
@@ -316,7 +332,8 @@ public class UserController {
 	@POST
 	@Path("/GetLastPosition")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String GetLastPosition(@FormParam("id") String id) {
+	public String GetLastPosition(@FormParam("id") String id) 
+	{
 		HttpSession session = request.getSession();
 		// Long id = (Long) session.getAttribute("id");
 		// String serviceUrl =
@@ -337,11 +354,10 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return session.toString();
 
+		return session.toString();
 	}
 
-}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -358,7 +374,8 @@ public class UserController {
 	@POST
 	@Path("/unfollowUSer")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String unfollowUSer(@FormParam("id_1") Integer followerID, @FormParam("id_2") Integer followedID) {
+	public String unfollowUSer(@FormParam("id_1") Integer followerID, @FormParam("id_2") Integer followedID) 
+	{
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
 		// String serviceUrl =
