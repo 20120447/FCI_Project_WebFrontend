@@ -20,13 +20,23 @@ import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+/**
+ * 
+ * UserController  class contains rest services  , this class contain all action functions for web Application.
+ * version 1.0
+ * @author Mohamed samir ,Hadeer Tarek , Nesma mahmoud , Nada Nashaat , Fatma Abdelaty
+ * since 17/3/2016
+ */
 @Path("/")
 public class UserController 
 {
 	@Context
 	HttpServletRequest request;
 
+	/**
+	 * Action function to render login page this function will be excuted by using url like (rest/login)
+	 * @return login page
+	 */
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -35,6 +45,13 @@ public class UserController
 		return Response.ok(new Viewable("/Login.jsp")).build();
 	}
 
+	
+	/**
+	 * Action function to render signup page this function will be excuted
+	 *  by using url like (rest/signup)
+	 * @return signup page 
+	 */
+	
 	@GET
 	@Path("/signUp")
 	@Produces(MediaType.TEXT_HTML)
@@ -44,12 +61,29 @@ public class UserController
 		return Response.ok(new Viewable("/Signup.jsp")).build();
 	}
 	
+	
+	/**
+	 * Action function to render show location page  page 
+	 * this function will be excuted by using url lik (rest/showLocation)
+	 * @return  show location page 
+	 */
+	
 	@GET
 	@Path("/showLocation")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showLocationPage(){
 		return Response.ok(new Viewable("/ShowLocation.jsp")).build();
 	}
+	
+	/**
+	 * updateLocation Action function , this function act as a controller part 
+	 * it will call updatePosition service to update user data 
+	 * @param lat  
+	 *        provided Latitude of current user's position
+	 * @param lon  
+	 *        provide Longitude of current user's position
+	 * @return  status json
+	 */
 	@POST
 	@Path("/updateMyLocation")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -82,6 +116,14 @@ public class UserController
 	}
 	
 	///////follow User////
+	
+	/**
+	 * Action function , this function act as a controller part 
+	 * it will call  followUser service to check user data  and update it to add new user
+	 * @param tofollow 
+	 *               provided user id the want to follow his/her
+	 * @return  string statement
+	 */
 
 	@POST
 	@Path("/updateNewFollower")
@@ -116,6 +158,14 @@ public class UserController
 	//////////////////////
 	
 
+	/**
+	 *  Action function used to call login service to check user data and get user from data store
+	 * @param email 
+	 *            provided user email 
+	 * @param pass  
+	 *          provided user password
+	 * @return  login page 
+	 */
 	@POST
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
@@ -155,6 +205,14 @@ public class UserController
 
 	}
 
+	/**
+	 * Action function used to call signup  service to check user data and store user in data store
+	 * @param name     provided user name   
+	 * @param email    provided user email
+	 * @param pass     provided user password
+	 * @return   signup page view
+	 */
+	
 	@POST
 	@Path("/doSignUp")
 	@Produces(MediaType.TEXT_HTML)
@@ -194,6 +252,16 @@ public class UserController
 		return null;
 
 	}
+	
+	
+	/**
+	 * Action function used to call getFollower service
+	 *  and get data of followed users from data store 
+	 * @param id   provided user id 
+	 * @return   userd ids
+	 */
+	
+	
 	@POST
 	@Path("/getFollower")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -223,6 +291,13 @@ public class UserController
 	
 	// ------------------------------------------- GetLastPosition --------------------------------------------------//
 
+	    /**
+	     * Action function used to call GetLastPosition service to check user
+	     *  data  and get user information from data store
+	     * @param id  provided user id 
+	     * @return  status json
+	     */
+	
 		@POST
 		@Path("/GetLastPosition")
 		@Produces(MediaType.TEXT_PLAIN)
@@ -251,10 +326,20 @@ public class UserController
 
 		}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/**
+		 * Action function used to call unfollowUSer to check user data and update  
+		 * data store after deleting the unfollowed user
+		 * @param followerID   
+		 *                 provide follower id user 
+		 * @param followedID
+		 *                 provided followed id user 
+		 * @return   string statement  
+		 */
+		
 		@POST
 		@Path("/unfollowUSer")
 		@Produces(MediaType.TEXT_PLAIN)
-		public String updateLocation(@FormParam("id_1")Integer followerID,  @FormParam("id_2") Integer followedID){
+		public String unfollowUSer(@FormParam("id_1")Integer followerID,  @FormParam("id_2") Integer followedID){
 			HttpSession session = request.getSession();
 			Long id = (Long) session.getAttribute("id");
 			//String serviceUrl = "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/unfollowUser";
