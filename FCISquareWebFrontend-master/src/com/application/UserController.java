@@ -111,9 +111,9 @@ public class UserController {
 	public String updateLocation(@FormParam("lat") String lat, @FormParam("long") String lon) {
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
+		 String serviceUrl =
+		 "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/updatePosition";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
 		String urlParameters = "id=" + id + "&lat=" + lat + "&long=" + lon;
 		// System.out.println(urlParameters);
@@ -150,7 +150,8 @@ public class UserController {
 	@POST
 	@Path("/updateNewFollower")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateNewFollower(@FormParam("tofollow") String tofollow) {
+	public String updateNewFollower(@FormParam("tofollow") String tofollow)
+	{
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
 		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/followUser";
@@ -192,9 +193,8 @@ public class UserController {
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("email") String email, @FormParam("pass") String pass) {
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/login";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
+		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/login";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
 		String urlParameters = "email=" + email + "&pass=" + pass;
 		// System.out.println(urlParameters);
@@ -244,9 +244,8 @@ public class UserController {
 	@Produces(MediaType.TEXT_HTML)
 	public Response showHomePage(@FormParam("name") String name, @FormParam("email") String email,
 			@FormParam("pass") String pass) {
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/signup";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/signup";
+		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/signup";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/signup";
 
 		String urlParameters = "name=" + name + "&email=" + email + "&pass=" + pass;
 		// System.out.println(urlParameters);
@@ -293,9 +292,8 @@ public class UserController {
 	@Produces(MediaType.TEXT_PLAIN)
 	public ArrayList getFollower(@FormParam("ID") int id) {
 		HttpSession session = request.getSession();
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/getFollower";
+		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/getFollower";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/getFollower";
 
 		String urlParameters = "id=" + id;
 		// System.out.println(urlParameters);
@@ -336,9 +334,8 @@ public class UserController {
 	{
 		HttpSession session = request.getSession();
 		// Long id = (Long) session.getAttribute("id");
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
+		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/GetLastPosition";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
 
 		String urlParameters = "id=" + id;
 		System.out.println(urlParameters);
@@ -378,9 +375,8 @@ public class UserController {
 	{
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		// String serviceUrl =
-		// "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/unfollowUser";
-		String serviceUrl = "http://localhost:8080/FCISquare/rest/unfollowUser";
+		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/unfollowUser";
+		//String serviceUrl = "http://localhost:8080/FCISquare/rest/unfollowUser";
 
 		String urlParameters = "id=" + id + "&id_1=" + followerID + "&id_2=" + followedID;
 		// System.out.println(urlParameters);
