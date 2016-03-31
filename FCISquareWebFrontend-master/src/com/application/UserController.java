@@ -25,12 +25,12 @@ import org.json.simple.parser.ParseException;
 
 
 /**
- * 
+ *
  * UserController class contains rest services , this class contain all action
 
 
  * functions for web Application. version 1.0
- * 
+ *
  * @author Mohamed samir ,Hadeer Tarek , Nesma mahmoud , Nada Nashaat , Fatma
  *         Abdelaty since 17/3/2016
  */
@@ -43,21 +43,30 @@ public class UserController {
 	@Context
 	HttpServletRequest request;
 
+
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String test(){
+		return "Hello";
+	}
+
 	/**
 	 * Action function to render login page this function will be excuted by
 	 * using url like (rest/login)
-	 * 
+	 *
 	 * @return login page
 	 */
 
 
-	
+
 
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public Response loginPage() 
+	public Response loginPage()
 	{
+
 		return Response.ok(new Viewable("/Login.jsp")).build();
 	}
 
@@ -65,7 +74,7 @@ public class UserController {
 	/**
 	 * Action function to render signup page this function will be excuted by
 	 * using url like (rest/signup)
-	 * 
+	 *
 	 * @return signup page
 	 */
 
@@ -79,26 +88,62 @@ public class UserController {
 		return Response.ok(new Viewable("/Signup.jsp")).build();
 	}
 
+	@GET
+	@Path("/followUser")
+	@Produces(MediaType.TEXT_HTML)
+
+	public Response followPage()
+	{
+		return Response.ok(new Viewable("/follow.jsp")).build();
+	}
+
+	@GET
+	@Path("/unfollowUser")
+	@Produces(MediaType.TEXT_HTML)
+
+	public Response unfollowPage()
+	{
+		return Response.ok(new Viewable("/unfollowUser.jsp")).build();
+	}
+
+	@GET
+	@Path("/GetLastPosition")
+	@Produces(MediaType.TEXT_HTML)
+
+	public Response GetPositionPage()
+	{
+		return Response.ok(new Viewable("/GetLastPosition.jsp")).build();
+	}
+
+
 
 	/**
 	 * Action function to render show location page page this function will be
 	 * excuted by using url lik (rest/showLocation)
-	 * 
+	 *
 	 * @return show location page
 	 */
 
 	@GET
 	@Path("/showLocation")
 	@Produces(MediaType.TEXT_HTML)
-	public Response showLocationPage() {
+	public Response showLocationPage()
+	{
 		return Response.ok(new Viewable("/ShowLocation.jsp")).build();
 	}
 
+	@GET
+	@Path("/getFollower")
+	@Produces(MediaType.TEXT_HTML)
+	public Response showFollowerList()
+	{
+		return Response.ok(new Viewable("/getFollower.jsp")).build();
+	}
 
 	/**
 	 * updateLocation Action function , this function act as a controller part
 	 * it will call updatePosition service to update user data
-	 * 
+	 *
 	 * @param lat
 	 *            provided Latitude of current user's position
 	 * @param lon
@@ -111,9 +156,8 @@ public class UserController {
 	public String updateLocation(@FormParam("lat") String lat, @FormParam("long") String lon) {
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		 String serviceUrl =
-		 "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/updatePosition";
-		//String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
+		// String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/updatePosition";
+		String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
 		String urlParameters = "id=" + id + "&lat=" + lat + "&long=" + lon;
 		// System.out.println(urlParameters);
@@ -141,14 +185,14 @@ public class UserController {
 	/**
 	 * Action function , this function act as a controller part it will call
 	 * followUser service to check user data and update it to add new user
-	 * 
+	 *
 	 * @param tofollow
 	 *            provided user id the want to follow his/her
 	 * @return string statement
 	 */
 
 	@POST
-	@Path("/updateNewFollower")
+	@Path("/dofollow")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateNewFollower(@FormParam("tofollow") String tofollow)
 	{
@@ -183,16 +227,17 @@ public class UserController {
 
 	/**
 	 *  Action function used to call login service to check user data and get user from data store
-	 * @param email 
-	 *            provided user email 
-	 * @param pass  
+	 * @param email
+	 *            provided user email
+	 * @param pass
 	 *          provided user password
-	 * @return  login page 
+	 * @return  login page
 	 */
 	@POST
 	@Path("/doLogin")
 	@Produces(MediaType.TEXT_HTML)
-	public Response showHomePage(@FormParam("email") String email, @FormParam("pass") String pass) {
+	public Response showHomePage(@FormParam("email") String email, @FormParam("pass") String pass)
+	{
 		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/login";
 		//String serviceUrl = "http://localhost:8080/FCISquare/rest/login";
 
@@ -229,7 +274,7 @@ public class UserController {
 	/**
 	 * Action function used to call signup service to check user data and store
 	 * user in data store
-	 * 
+	 *
 	 * @param name
 	 *            provided user name
 	 * @param email
@@ -281,7 +326,7 @@ public class UserController {
 	/**
 	 * Action function used to call getFollower service and get data of followed
 	 * users from data store
-	 * 
+	 *
 	 * @param id
 	 *            provided user id
 	 * @return userd ids
@@ -290,7 +335,8 @@ public class UserController {
 	@POST
 	@Path("/getFollower")
 	@Produces(MediaType.TEXT_PLAIN)
-	public ArrayList getFollower(@FormParam("ID") int id) {
+	public Response getFollower(@FormParam("ID") int id)
+	{
 		HttpSession session = request.getSession();
 		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/getFollower";
 		//String serviceUrl = "http://localhost:8080/FCISquare/rest/getFollower";
@@ -306,38 +352,37 @@ public class UserController {
 			obj = (JSONObject) parser.parse(retJson);
 			int i = 0;
 			IDs.add((int) session.getAttribute("followerID"), i);
+			return Response.ok(new Viewable("/home.jsp")).build();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return IDs;
+		return null;
 
 	}
-
-	
 
 	// ------------------------------------------- GetLastPosition
 
 	/**
 	 * Action function used to call GetLastPosition service to check user data
 	 * and get user information from data store
-	 * 
+	 *
 	 * @param id
 	 *            provided user id
 	 * @return status json
 	 */
 
 	@POST
-	@Path("/GetLastPosition")
+	@Path("/doGetLastPosition")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String GetLastPosition(@FormParam("id") String id) 
+	public String GetLastPosition(@FormParam("User_id") String User_id)
 	{
 		HttpSession session = request.getSession();
-		// Long id = (Long) session.getAttribute("id");
+		 Long id = (Long) session.getAttribute("id");
 		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/GetLastPosition";
 		//String serviceUrl = "http://localhost:8080/FCISquare/rest/GetLastPosition";
 
-		String urlParameters = "id=" + id;
+		String urlParameters = "id=" + User_id;
 		System.out.println(urlParameters);
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
@@ -360,7 +405,7 @@ public class UserController {
 	/**
 	 * Action function used to call unfollowUSer to check user data and update
 	 * data store after deleting the unfollowed user
-	 * 
+	 *
 	 * @param followerID
 	 *            provide follower id user
 	 * @param followedID
@@ -368,17 +413,20 @@ public class UserController {
 	 * @return string statement
 	 */
 
+
 	@POST
-	@Path("/unfollowUSer")
+	@Path("/doUnfollowUSer")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String unfollowUSer(@FormParam("id_1") Integer followerID, @FormParam("id_2") Integer followedID) 
+	public String unfollowUSer( @FormParam("id_2") Integer followedID)
 	{
+
 		HttpSession session = request.getSession();
 		Long id = (Long) session.getAttribute("id");
-		 String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/unfollowUser";
+
+		String serviceUrl = "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/unfollowUser";
 		//String serviceUrl = "http://localhost:8080/FCISquare/rest/unfollowUser";
 
-		String urlParameters = "id=" + id + "&id_1=" + followerID + "&id_2=" + followedID;
+		String urlParameters = "id=" + id +"&id_2=" + followedID;
 		// System.out.println(urlParameters);
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");

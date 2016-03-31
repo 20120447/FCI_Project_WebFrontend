@@ -7,24 +7,22 @@
 <head>
 <meta http-equiv="Content-Type"
 	content="text/html; charset=windows-1256">
-<title>Insert title here</title>
+<title>Welcome Home </title>
 </head>
 <body>
+    <div style="width:500px;height:0px;">
+	<img src="E:\FCI\SW2\project\item453602.gif" align="middle" style="display:block;"/></div>
+	
 	<p>Welcome b2a ya ${it.name} :D :D </p>
-	<p>This is should be user home page</p>
+	<p>The user home page</p>
 	<p> You can show your current position on map and update your position on our database from <a href="/FCISquareApp/app/showLocation"> here</a>
+
+    <h2> you can updatePosition  <a href = "/frontend/app/updateMyLocation">here</a> </h2>
+    <h2> you can follow user  <a href = "/frontend/app/followUser">here</a> </h2>
+	<h2> you can get follower <a href = "/frontend/app/getFollower">here</a> </h2>
+	<h2> you can un-follow other user <a href = "/frontend/app/unfollowUser">here</a> </h2>
+	<h2> you can get the last position  <a href = "/frontend/app/GetLastPosition">here</a> </h2>
 	
-	<p>Current implemented services
-		"http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/signup ---
-		{requires: name, email, pass}"</p>
-	<p>and "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/login ---
-		{requires: name, pass}"</p>
-	<p>and "http://se2firstapp-softwareeng2.rhcloud.com/FCISquare/rest/updatePosition ---
-		{requires: id, lat, long}"</p>
-	<p>and "http://firstapp-fciswproject.rhcloud.com/FCISquare/rest/followUser ---
-		{requires: id1, id2}"</p>
-	<p> All parameters are post parameters </p>
-	
-	<p>you should implement Follow,	UnFollow, getFollowers and getLastPositionOfUser services </p>
+  
 </body>
 </html>

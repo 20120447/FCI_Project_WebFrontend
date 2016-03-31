@@ -11,13 +11,21 @@
 	FCISquare Application
 </title>
 
+<style>
+img { 
+    width:100%; 
+}
+</style>
+
 </head>
 
 <body>
 
+
+	]
 <center><h1>Welcome to FCI Square</h1>
 		<h1> Login now</h1>
-		<h2> if you don't have an account you can signup from <a href = "/FCISquareApp/app/signUp">here</a> </h2>
+		<h2> if you don't have an account you can signup from <a href = "/frontend/app/signUp">here</a> </h2>
 		</center>
 
 <form action = "doLogin" method = "post" >
